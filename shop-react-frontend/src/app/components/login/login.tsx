@@ -43,20 +43,22 @@ export const Login = () => {
         }
     }
 
-    return <form className="login-form" onSubmit={(e) => handleFormSubmit(e)}>
-        <h3>Login</h3>
-        <div className="input-container">
-            <label htmlFor="login">Login or E-Mail</label>
-            <input id="login" type="login" value={formValue.login} onInput={(e) => setFormValue({ ...formValue, login: e.currentTarget.value })}/>
-        </div>
-        <div className="input-container">
-            <label htmlFor="password">Password</label>
-            <input id="password" type="password" value={formValue.password} onInput={(e) => setFormValue({ ...formValue, password: e.currentTarget.value })}/>
-        </div>
-        <div className="btn-container">
-            <button type="submit">Submit</button>
-        </div>
+    return <div className="login-container">
+        <form className="login-form" onSubmit={(e) => handleFormSubmit(e)}>
+            <h3>Login</h3>
+            <div className="input-container">
+                <label htmlFor="login">Login or E-Mail</label>
+                <input id="login" type="login" value={formValue.login} onInput={(e) => setFormValue({ ...formValue, login: e.currentTarget.value })}/>
+            </div>
+            <div className="input-container">
+                <label htmlFor="password">Password</label>
+                <input id="password" type="password" value={formValue.password} onInput={(e) => setFormValue({ ...formValue, password: e.currentTarget.value })}/>
+            </div>
+            <div className="btn-container">
+                <button type="submit">Submit</button>
+            </div>
 
-        { error ? <div className="error-text">{error}</div> : null }
-    </form>
+            { error ? <div className="error-text">{error}</div> : null }
+        </form>
+    </div>
 }

@@ -1,16 +1,77 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Category } from './category.entity';
+import { Product } from './product.entity';
+import { User } from '../auth/user.entity';
+import { promises as fs } from 'fs';
+import { join } from 'path';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class ProductsService {
     constructor(
         @InjectRepository(Category)
         private readonly categoryRepository: Repository<Category>,
+        @InjectRepository(Product)
+        private readonly productRepository: Repository<Product>,
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>,
     ) {}
 
     getCategories(): Promise<Category[]> {
         return this.categoryRepository.find();
+    }
+
+    async createNewProduct(productData: any, file?: Express.Multer.File) {
+        if (!productData || !productData.name) {
+            throw new BadRequestException('Missing product name');
+        }
+
+        const product = new Product();
+        product.name = productData.name;
+
+        if (productData.categoryId) {
+            const categoryId = Number(productData.categoryId);
+            const category = await this.categoryRepository.findOne({ where: { id: categoryId } });
+            if (!category) throw new BadRequestException('Invalid categoryId');
+            product.category = category;
+        }
+
+        if (productData.sellerId) {
+            const sellerId = Number(productData.sellerId);
+            const user = await this.userRepository.findOne({ where: { id: sellerId } });
+            if (!user) throw new BadRequestException('Invalid sellerId');
+            product.seller = user;
+        } else {
+            throw new BadRequestException('Missing sellerId');
+        }
+
+        // handle file if provided
+        if (file && file.buffer) {
+            const uploadsDir = join(process.cwd(), 'uploads', 'products');
+            await fs.mkdir(uploadsDir, { recursive: true });
+
+            const ext = (file.originalname && file.originalname.split('.').pop()) || 'bin';
+            const filename = `${randomUUID()}.${ext}`;
+            const filePath = join(uploadsDir, filename);
+
+            await fs.writeFile(filePath, file.buffer);
+
+            // store a relative URL path that can be served by static assets
+            product.imageUrl = `/uploads/products/${filename}`;
+        }
+
+        const savedProduct = await this.productRepository.save(product);
+
+        return {
+            ...savedProduct,
+            seller: savedProduct.seller ? {
+                id: savedProduct.seller.id,
+                username: savedProduct.seller.username,
+                email: savedProduct.seller.email,
+                roles: savedProduct.seller.roles,
+            } : null,
+        }
     }
 }

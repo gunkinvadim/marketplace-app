@@ -30,7 +30,6 @@ function App() {
       setIsLoading(true);
       const res = await fetchCurrentUserData();
       setUserData(res.data.userData);
-      debugger
     } catch(e) {
       console.error(e);
       if (e.response.status == 401) {
@@ -69,10 +68,12 @@ function App() {
           <div className="app-body">
             <Routes>
               <Route path="/" element={<Shop/>}/>
-              <Route path="/my-products" element={<MyProducts/>}/>
-              <Route path="/list" element={<List/>}/>
-              <Route path="/login" element={<Login/>}/>
-              <Route path="/signup" element={<SignUp/>}/>
+              {(userData && userData.roles.includes("SELLER")) && <Route path="/my-products" element={<MyProducts/>}/>}
+              {/* <Route path="/list" element={<List/>}/> */}
+              {!userData && <>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/signup" element={<SignUp/>}/>
+              </>}
               <Route path="*" element={<NotFound/>}/>
             </Routes>
           </div>

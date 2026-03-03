@@ -1,3 +1,5 @@
+import "./shop.scss";
+
 export const Shop = () => {
-    return <div>Here will be a shop page</div>
+    return <div className="shop-container">Here will be a shop page</div>
 }

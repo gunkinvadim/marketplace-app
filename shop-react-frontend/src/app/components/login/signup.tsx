@@ -44,34 +44,36 @@ export const SignUp = () => {
         }
     }
 
-    return <form className="login-form" onSubmit={(e) => handleFormSubmit(e)}>
-        <h3>Sign Up</h3>
-        <div className="input-container">
-            <label htmlFor="username">Username</label>
-            <input id="username" type="text" value={formValue.username} onInput={(e) => setFormValue({ ...formValue, username: e.currentTarget.value })}/>
-        </div>
-        <div className="input-container">
-            <label htmlFor="email">E-Mail</label>
-            <input id="email" type="email" value={formValue.email} onInput={(e) => setFormValue({ ...formValue, email: e.currentTarget.value })}/>
-        </div>
-        <div className="input-container">
-            <label htmlFor="password">Password</label>
-            <input id="password" type="password" value={formValue.password} onInput={(e) => setFormValue({ ...formValue, password: e.currentTarget.value })}/>
-        </div>
-        <div className="input-container">
-            <label htmlFor="repeat-password">Repeat password</label>
-            <input id="repeat-password" type="password" value={formValue.repeatPassword} onInput={(e) => setFormValue({ ...formValue, repeatPassword: e.currentTarget.value })}/>
-        </div>
-        <div>
-            <label><input type="checkbox"
-                checked={formValue.createSellerAccount}
-                onChange={(e) => setFormValue({ ...formValue, createSellerAccount: e.currentTarget.checked })}
-            />Do you want to create seller account?</label>
-        </div>
-        <div className="btn-container">
-            <button type="submit">Submit</button>
-        </div>
+    return <div className="login-container">
+        <form className="login-form" onSubmit={(e) => handleFormSubmit(e)}>
+            <h3>Sign Up</h3>
+            <div className="input-container">
+                <label htmlFor="username">Username</label>
+                <input id="username" type="text" value={formValue.username} onInput={(e) => setFormValue({ ...formValue, username: e.currentTarget.value })}/>
+            </div>
+            <div className="input-container">
+                <label htmlFor="email">E-Mail</label>
+                <input id="email" type="email" value={formValue.email} onInput={(e) => setFormValue({ ...formValue, email: e.currentTarget.value })}/>
+            </div>
+            <div className="input-container">
+                <label htmlFor="password">Password</label>
+                <input id="password" type="password" value={formValue.password} onInput={(e) => setFormValue({ ...formValue, password: e.currentTarget.value })}/>
+            </div>
+            <div className="input-container">
+                <label htmlFor="repeat-password">Repeat password</label>
+                <input id="repeat-password" type="password" value={formValue.repeatPassword} onInput={(e) => setFormValue({ ...formValue, repeatPassword: e.currentTarget.value })}/>
+            </div>
+            <div className="checkbox-container">
+                <label><input type="checkbox"
+                    checked={formValue.createSellerAccount}
+                    onChange={(e) => setFormValue({ ...formValue, createSellerAccount: e.currentTarget.checked })}
+                />Do you want to create seller account?</label>
+            </div>
+            <div className="btn-container">
+                <button type="submit">Submit</button>
+            </div>
 
-        { error ? <div className="error-text">{error}</div> : null }
-    </form>
+            { error ? <div className="error-text">{error}</div> : null }
+        </form>
+    </div>
 }

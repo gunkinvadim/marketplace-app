@@ -26,8 +26,8 @@ export const AppHeader = () => {
     return <header className="app-header">
         <div className="header-container">
             <NavLink className="header-link" to="/">Shop</NavLink>
-            <NavLink className="header-link" to="/my-products">My Products</NavLink>
-            <NavLink className="header-link" to="/list">List</NavLink>
+            {(userData && userData.roles.includes("SELLER")) && <NavLink className="header-link" to="/my-products">My Products</NavLink>}
+            {/* <NavLink className="header-link" to="/list">List</NavLink> */}
         </div>
         
         <div className="header-container">
@@ -40,7 +40,7 @@ export const AppHeader = () => {
             {userData ? (
                 <>
                     <span className="username">{userData.username}</span>
-                    <button className="header-button">Become a seller</button>
+                    {(!userData.roles.includes("SELLER")) && <button className="header-button">Become a seller</button>}
                     <button className="header-button" onClick={logoutHandler}>Logout</button>
                 </>
             ) : null}

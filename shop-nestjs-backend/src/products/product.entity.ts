@@ -17,4 +17,7 @@ export class Product {
     @ManyToOne(() => User, user => user.products, { nullable: false })
     @JoinColumn({ name: 'sellerId' })
     seller: User;
+    @Column({ nullable: true })
+    imageUrl: string;
+
 }

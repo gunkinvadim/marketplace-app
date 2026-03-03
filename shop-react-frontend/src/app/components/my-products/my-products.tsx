@@ -19,7 +19,6 @@ export const MyProducts = () => {
             setIsLoading(true);
             const res = await fetchCategoriesList();
             setCategoriesList(res.data);
-            debugger
         } catch(e) {
             console.error(e);
         } finally {
@@ -32,11 +31,11 @@ export const MyProducts = () => {
         <div className="my-products-container">
             <div className="my-products-header">
                 <h1>Products List</h1>
-                <button className="new-product-btn" onClick={() => setProductFormPopup({ active: true, productId: null })}>Add Product</button>
+                <button className="new-product-btn" onClick={() => setProductFormPopup({ active: true, productId: null })}>Add New Product</button>
             </div>
 
             <div className="my-products-list">
-
+                here will be a list of user's products
             </div>
         </div>
 

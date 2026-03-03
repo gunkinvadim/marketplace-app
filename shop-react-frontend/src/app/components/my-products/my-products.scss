@@ -1,4 +1,9 @@
 .my-products-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
     .my-products-header {
         display: flex;
         justify-content: space-between;
@@ -13,11 +18,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: #fff;
+            border-color: #007bff;
             cursor: pointer;
+
+            &:hover {
+                opacity: 0.8
+            }
         }
     }
 
     .my-products-list {
-        
+        text-align: center;
     }
 }
