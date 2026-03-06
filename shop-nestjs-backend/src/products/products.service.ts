@@ -7,6 +7,7 @@ import { User } from '../auth/user.entity';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import { randomUUID } from 'crypto';
+import { ProductFormData } from 'src/models/product.model';
 
 @Injectable()
 export class ProductsService {
@@ -23,7 +24,21 @@ export class ProductsService {
         return this.categoryRepository.find();
     }
 
-    async createNewProduct(productData: any, file?: Express.Multer.File) {
+    async getProductList(sellerId: number | null) {
+        if (sellerId == null) {
+            return this.productRepository.find({ relations: ['seller', 'category'] });
+        }
+
+        const res = await this.productRepository.createQueryBuilder('product')
+            .leftJoinAndSelect('product.seller', 'seller')
+            .leftJoinAndSelect('product.category', 'category')
+            .where('product.sellerId = :sellerId', { sellerId })
+            .getMany();
+
+        return res;
+    }
+
+    async createNewProduct(productData: ProductFormData, file?: Express.Multer.File) {
         if (!productData || !productData.name) {
             throw new BadRequestException('Missing product name');
         }

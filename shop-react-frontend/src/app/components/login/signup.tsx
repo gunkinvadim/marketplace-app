@@ -11,6 +11,7 @@ import useUserStore from "../../stores/userStore";
 
 export const SignUp = () => {
 
+    const userData = useUserStore(state => state.userData);
     const setUserData = useUserStore(state => state.setUserData);
 
     const [ formValue, setFormValue ] = useState<SignUpFormValue>({ username: "", email: "", password: "", repeatPassword: "", createSellerAccount: false });
@@ -35,7 +36,11 @@ export const SignUp = () => {
 
             setCookie("token", res.data.token);
 
-            navigate("/");
+            if (res.data.userData.roles.includes("SELLER")) {
+                navigate("/my-products");
+            } else {
+                navigate("/");
+            }
         } catch(err) {
             if (err.response) {
                 setError(err.response.data.message);

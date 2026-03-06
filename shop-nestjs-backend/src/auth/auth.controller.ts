@@ -25,7 +25,7 @@ export class AuthController {
 
     @UseGuards(AuthGuard("jwt"))
     @Get("me")
-    async me(@CurrentUser() user: { userId: number }) {
+    async getCurrentUser(@CurrentUser() user: { userId: number }) {
         return this.appService.getCurrentUser(user.userId);
     }
 }

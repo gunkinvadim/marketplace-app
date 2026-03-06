@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import "./my-products.scss";
 import { ProductForm } from "./product-form/product-form";
-import { fetchCategoriesList } from "../../api/products.api";
+import { fetchCategoriesList, fetchMyProductsList, fetchProductsList } from "../../api/products.api";
 import { ProductCategory } from "../../models/products.model";
 
 export const MyProducts = () => {
 
     const [ productFormPopup, setProductFormPopup ] = useState<{ active: boolean, productId: number }>({ active: false, productId: null });
     const [ categoriesList, setCategoriesList ] = useState<ProductCategory[]>([]);
+    const [ productsList, setProductsList ] = useState<any[]>([]);
     const [ isLoading, setIsLoading ] = useState(false);
 
     useEffect(() => {
@@ -17,8 +18,10 @@ export const MyProducts = () => {
     const fetchData = async () => {
         try {
             setIsLoading(true);
-            const res = await fetchCategoriesList();
-            setCategoriesList(res.data);
+            const categories = await fetchCategoriesList();
+            setCategoriesList(categories.data);
+            const products = await fetchMyProductsList();
+            setProductsList(products.data);
         } catch(e) {
             console.error(e);
         } finally {
@@ -42,6 +45,7 @@ export const MyProducts = () => {
         {productFormPopup.active && <ProductForm
             productId={productFormPopup.productId}
             categoriesList={categoriesList}
+            fetchData={() => fetchData()}
             closePopup={() => setProductFormPopup({ active: false, productId: null })}
         ></ProductForm>}
     </>

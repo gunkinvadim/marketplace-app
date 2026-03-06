@@ -1,19 +1,18 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./product-form.scss";
 import useUserStore from "../../../stores/userStore";
-import { ProductCategory, ProductFormData } from "../../../models/products.model";
+import { ProductCategory, ProductData } from "../../../models/products.model";
 import { createNewProduct } from "../../../api/products.api";
 
-export const ProductForm = ({ productId, categoriesList, closePopup }:
-    { productId: number, categoriesList: ProductCategory[], closePopup: () => void }) => {
+export const ProductForm = ({ productId, categoriesList, closePopup, fetchData }:
+    { productId: number, categoriesList: ProductCategory[], closePopup: () => void, fetchData: () => Promise<void> }) => {
 
-    const [ productFormData, setProductFormData ] = useState<ProductFormData>({
+    const [ productFormData, setProductFormData ] = useState<ProductData>({
         name: "",
         description: "",
         price: 0,
         sellerId: null,
-        categoryId: null,
-        // image: null
+        categoryId: null
     });
 
     const [ selectedImage, setSelectedImage ] = useState<File>();
@@ -60,6 +59,7 @@ export const ProductForm = ({ productId, categoriesList, closePopup }:
         try {
             const res = await createNewProduct(formData);
             console.log(res);
+            await fetchData();
             closePopup();
         } catch(err) {
             console.error(err);

@@ -47,15 +47,12 @@ function App() {
 
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      if (!userData) {
-        getCurrentUserData();
-      }
+      getCurrentUserData();
     } else {
       delete axios.defaults.headers.common['Authorization'];
       clearUserData();
     }
-  }, [])
+  }, [cookies['token']])
 
   return (
     <BrowserRouter>

@@ -1,12 +1,12 @@
+import { error } from "console";
 import { environment } from "../../environments/environment";
-import { ProductCategory, ProductFormData } from "../models/products.model";
+import { ProductCategory, ProductData } from "../models/products.model";
 import axios from "axios";
 
 // helper to read `token` cookie value
 const getTokenFromCookie = () => {
     if (typeof document === 'undefined') return null;
     const match = document.cookie.match(/(^|;)\s*token=([^;]+)/);
-    debugger
     return match ? decodeURIComponent(match[2]) : null;
 }
 
@@ -19,11 +19,25 @@ export const fetchCategoriesList = async () => {
     }
 }
 
-export const fetchProductsList = () => {
-    
+export const fetchProductsList = async () => {
+    try {
+        return await axios.get<any[]>(environment.baseUrl + `/products`);
+    } catch (error) {
+        console.error("Error fetching products:", error)
+        throw error
+    }
 }
 
-export const createNewProduct = async (req: ProductFormData | FormData) => {
+export const fetchMyProductsList = async () => {
+    try {
+        return await axios.get<ProductData[]>(environment.baseUrl + "/products/my");
+    } catch (error) {
+        console.error("Error fetching products:", error)
+        throw error
+    }
+}
+
+export const createNewProduct = async (req: ProductData | FormData) => {
     try {
         if (req instanceof FormData) {
             const token = getTokenFromCookie();
