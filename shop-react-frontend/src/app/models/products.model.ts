@@ -1,4 +1,6 @@
-export interface ProductData {
+import { UserData } from "./auth.models";
+
+export interface ProductFormData {
     name: string,
     description: string;
     price: number;
@@ -10,4 +12,14 @@ export interface ProductData {
 export interface ProductCategory {
     id: number,
     name: string;
+}
+
+export interface ProductData {
+    id: number;
+    name: string,
+    description: string;
+    price: number;
+    seller: UserData,
+    category: ProductCategory,
+    imageUrl?: string,
 }

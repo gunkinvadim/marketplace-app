@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import "./my-products.scss";
 import { ProductForm } from "./product-form/product-form";
 import { fetchCategoriesList, fetchMyProductsList, fetchProductsList } from "../../api/products.api";
-import { ProductCategory } from "../../models/products.model";
+import { ProductCategory, ProductData } from "../../models/products.model";
+import { environment } from "../../../environments/environment";
 
 export const MyProducts = () => {
 
     const [ productFormPopup, setProductFormPopup ] = useState<{ active: boolean, productId: number }>({ active: false, productId: null });
     const [ categoriesList, setCategoriesList ] = useState<ProductCategory[]>([]);
-    const [ productsList, setProductsList ] = useState<any[]>([]);
+    const [ productsList, setProductsList ] = useState<ProductData[]>([]);
     const [ isLoading, setIsLoading ] = useState(false);
 
     useEffect(() => {
@@ -38,7 +39,13 @@ export const MyProducts = () => {
             </div>
 
             <div className="my-products-list">
-                here will be a list of user's products
+                {productsList.map(product => <div key={product.id} className="product-card">
+                    <h2 className="product-name">{product.name}</h2>
+                    <img className="product-image" src={environment.baseUrl + product.imageUrl} alt={product.name}></img>
+                    <div className="product-category">{product.category?.name}</div>
+                    <div className="product-description">{product.description}</div>
+                    <div className="product-price">{product.price}$</div>
+                </div>)}
             </div>
         </div>
 

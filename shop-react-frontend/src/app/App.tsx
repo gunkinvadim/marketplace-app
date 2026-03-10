@@ -47,7 +47,10 @@ function App() {
 
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      getCurrentUserData();
+
+      if (!userData) {
+        getCurrentUserData();
+      }
     } else {
       delete axios.defaults.headers.common['Authorization'];
       clearUserData();

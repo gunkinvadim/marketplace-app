@@ -10,6 +10,12 @@ export class Product {
     @Column({ unique: true })
     name: string;
 
+    @Column({ nullable: true })
+    description: string;
+
+    @Column({ nullable: false })
+    price: number;
+
     @ManyToOne(() => Category, category => category.products, { nullable: false })
     @JoinColumn({ name: 'categoryId' })
     category: Category;

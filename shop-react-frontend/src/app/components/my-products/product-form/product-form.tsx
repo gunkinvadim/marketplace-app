@@ -1,13 +1,13 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./product-form.scss";
 import useUserStore from "../../../stores/userStore";
-import { ProductCategory, ProductData } from "../../../models/products.model";
+import { ProductCategory, ProductFormData } from "../../../models/products.model";
 import { createNewProduct } from "../../../api/products.api";
 
 export const ProductForm = ({ productId, categoriesList, closePopup, fetchData }:
     { productId: number, categoriesList: ProductCategory[], closePopup: () => void, fetchData: () => Promise<void> }) => {
 
-    const [ productFormData, setProductFormData ] = useState<ProductData>({
+    const [ productFormData, setProductFormData ] = useState<ProductFormData>({
         name: "",
         description: "",
         price: 0,

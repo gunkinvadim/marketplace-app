@@ -1,6 +1,6 @@
 import { error } from "console";
 import { environment } from "../../environments/environment";
-import { ProductCategory, ProductData } from "../models/products.model";
+import { ProductCategory, ProductData, ProductFormData } from "../models/products.model";
 import axios from "axios";
 
 // helper to read `token` cookie value
@@ -21,7 +21,7 @@ export const fetchCategoriesList = async () => {
 
 export const fetchProductsList = async () => {
     try {
-        return await axios.get<any[]>(environment.baseUrl + `/products`);
+        return await axios.get<ProductData[]>(environment.baseUrl + `/products`);
     } catch (error) {
         console.error("Error fetching products:", error)
         throw error
@@ -37,7 +37,7 @@ export const fetchMyProductsList = async () => {
     }
 }
 
-export const createNewProduct = async (req: ProductData | FormData) => {
+export const createNewProduct = async (req: ProductFormData | FormData) => {
     try {
         if (req instanceof FormData) {
             const token = getTokenFromCookie();

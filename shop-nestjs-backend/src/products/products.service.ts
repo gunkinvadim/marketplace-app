@@ -45,6 +45,13 @@ export class ProductsService {
 
         const product = new Product();
         product.name = productData.name;
+        product.description = productData.description;
+
+        if (productData.price) {
+            product.price = Number(productData.price);
+        } else {
+            throw new BadRequestException('Missing price!');
+        }
 
         if (productData.categoryId) {
             const categoryId = Number(productData.categoryId);
