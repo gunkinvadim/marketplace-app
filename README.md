@@ -39,12 +39,16 @@ The project simulates a real-world e-commerce system with authentication, produc
 
 ### Backend
 
+```bash
 cd shop-nestjs-backend
 npm install
 npm run start:dev
+```
 
 ### Frontend
 
+```bash
 cd shop-react-frontend
 npm install
 npm start
+```
