@@ -25,6 +25,6 @@ export interface ProductData {
 }
 
 export interface ProductListFilters {
-    categoryId?: number,
-    sellerId?: number
+    categoryId?: number | null,
+    sellerId?: number | null
 }

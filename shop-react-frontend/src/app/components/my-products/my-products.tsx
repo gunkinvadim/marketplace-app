@@ -37,7 +37,6 @@ export const MyProducts = () => {
 
         try {
             setIsLoading(true);
-            debugger
             const products = await fetchMyProductsList(newFilters);
             setProductsList(products.data);
         } catch(e) {
@@ -60,8 +59,8 @@ export const MyProducts = () => {
             </div>
 
             <div className="filters-container">
-                <select onChange={(e) => handleFilterChanges({ categoryId: parseInt(e.currentTarget.value) })}>
-                    <option value={null}>All categories</option>
+                <select onChange={(e) => handleFilterChanges({ categoryId: e.currentTarget.value !== "" ? parseInt(e.currentTarget.value) : null })}>
+                    <option value={""}>All categories</option>
                     {categoriesList.map(i => <option key={i.id} value={i.id}>
                         {i.name}
                     </option>)}

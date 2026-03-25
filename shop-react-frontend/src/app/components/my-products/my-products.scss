@@ -32,6 +32,7 @@
     }
 
     .filters-container {
+        margin-top: 20px;
         select {
             // flex: 1 1 auto;
             padding: 8px 10px;
@@ -41,6 +42,10 @@
             font-size: 14px;
             color: #111;
             cursor: pointer;
+
+            &:focus {
+                outline: none;
+            }
         }
     }
 

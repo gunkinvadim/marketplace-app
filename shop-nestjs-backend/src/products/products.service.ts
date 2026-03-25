@@ -29,11 +29,18 @@ export class ProductsService {
             return this.productRepository.find({ relations: ['seller', 'category'] });
         }
 
-        const res = await this.productRepository.createQueryBuilder('product')
+        const qb = this.productRepository.createQueryBuilder('product')
             .leftJoinAndSelect('product.seller', 'seller')
-            .leftJoinAndSelect('product.category', 'category')
-            .where('product.sellerId = :sellerId', { sellerId })
-            .getMany();
+            .leftJoinAndSelect('product.category', 'category');
+
+        if (sellerId != null) {
+            qb.andWhere('product.sellerId = :sellerId', { sellerId });
+        }
+        if (categoryId != null) {
+            qb.andWhere('product.categoryId = :categoryId', { categoryId });
+        }
+
+        const res = await qb.getMany();
 
         return res;
     }

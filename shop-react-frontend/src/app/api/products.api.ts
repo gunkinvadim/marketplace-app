@@ -19,9 +19,11 @@ export const fetchCategoriesList = async () => {
     }
 }
 
-export const fetchProductsList = async () => {
+export const fetchProductsList = async (filters: ProductListFilters) => {
     try {
-        return await axios.get<ProductData[]>(environment.baseUrl + `/products`);
+        return await axios.get<ProductData[]>(environment.baseUrl + `/products`, {
+            params: filters
+        });
     } catch (error) {
         console.error("Error fetching products:", error)
         throw error
@@ -30,7 +32,9 @@ export const fetchProductsList = async () => {
 
 export const fetchMyProductsList = async (filters: ProductListFilters) => {
     try {
-        return await axios.get<ProductData[]>(environment.baseUrl + "/products/my");
+        return await axios.get<ProductData[]>(environment.baseUrl + "/products/my", {
+            params: filters
+        });
     } catch (error) {
         console.error("Error fetching products:", error)
         throw error
