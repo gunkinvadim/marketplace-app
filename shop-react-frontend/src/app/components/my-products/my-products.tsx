@@ -167,23 +167,25 @@ export const MyProducts = () => {
                     </select>
                 </div>
 
-                <div className="my-products-list">
-                    {productsList.map(product => <div key={product.id} className="product-card">
-                        <h2 className="product-name">{product.name}</h2>
-                        <img className="product-image" src={environment.baseUrl + product.imageUrl} alt={product.name}></img>
-                        <div className="product-category">{product.category?.name}</div>
-                        <div className="product-description">{product.description}</div>
-                        <div className="product-price">{product.price}$</div>
-                        <div className="buttons-container">
-                            {productToDelete?.id === product.id ? <>
-                                <button className="confirm-deletion" onClick={() => handleDeleteProduct(product)}>Confirm deletion</button>
-                                <button className="cancel" onClick={() => setProductToDelete(null)}>Cancel</button>
-                            </> : <>
-                                <button className="edit" onClick={() => openEditPopup(product)}>Edit</button>
-                                <button className="delete" onClick={() => setProductToDelete(product)}>Delete</button>
-                            </>}
-                        </div>
-                    </div>)}
+                <div className="products-scroll-area">
+                    <div className="products-list">
+                        {productsList.map(product => <div key={product.id} className="product-card">
+                            <h2 className="product-name">{product.name}</h2>
+                            <img className="product-image" src={environment.baseUrl + product.imageUrl} alt={product.name}></img>
+                            <div className="product-category">{product.category?.name}</div>
+                            <div className="product-description">{product.description}</div>
+                            <div className="product-price">{product.price}$</div>
+                            <div className="buttons-container">
+                                {productToDelete?.id === product.id ? <>
+                                    <button className="confirm-deletion" onClick={() => handleDeleteProduct(product)}>Confirm deletion</button>
+                                    <button className="cancel" onClick={() => setProductToDelete(null)}>Cancel</button>
+                                </> : <>
+                                    <button className="edit" onClick={() => openEditPopup(product)}>Edit</button>
+                                    <button className="delete" onClick={() => setProductToDelete(product)}>Delete</button>
+                                </>}
+                            </div>
+                        </div>)}
+                    </div>
                 </div>
 
                 <div className="pagination">

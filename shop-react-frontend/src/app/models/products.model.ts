@@ -33,3 +33,8 @@ export interface ListPagination {
     pageNumber: number,
     pageSize: number
 }
+
+export interface CartItem {
+    product: ProductData,
+    count: number
+}

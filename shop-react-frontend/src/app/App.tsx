@@ -15,6 +15,7 @@ import { AppHeader } from './components/app-header/app-header';
 import { fetchCurrentUserData } from './api/auth.api';
 import { MyProducts } from './components/my-products/my-products';
 import { useAppStore } from './stores/appStore';
+import { Cart } from './components/cart/cart';
 
 function App() {
 
@@ -73,6 +74,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Shop/>}/>
               {(userData && userData.roles.includes("SELLER")) && <Route path="/my-products" element={<MyProducts/>}/>}
+              {(userData && userData.roles.includes("BUYER")) && <Route path="/cart" element={<Cart/>}/>}
               {/* <Route path="/list" element={<List/>}/> */}
               {!userData && <>
                 <Route path="/login" element={<Login/>}/>

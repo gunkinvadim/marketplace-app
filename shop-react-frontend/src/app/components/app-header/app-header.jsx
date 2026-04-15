@@ -27,6 +27,7 @@ export const AppHeader = () => {
         <div className="header-container">
             <NavLink className="header-link" to="/">Shop</NavLink>
             {(userData && userData.roles.includes("SELLER")) && <NavLink className="header-link" to="/my-products">My Products</NavLink>}
+            {(userData && userData.roles.includes("BUYER")) && <NavLink className="header-link" to="/cart">Cart</NavLink>}
             {/* <NavLink className="header-link" to="/list">List</NavLink> */}
         </div>
         

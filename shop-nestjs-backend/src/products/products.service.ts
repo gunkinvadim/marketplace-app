@@ -25,10 +25,6 @@ export class ProductsService {
     }
 
     async getProductList(sellerId: number | null, categoryId: number | null, pageNumber?: number | null, pageSize?: number | null) {
-        if (sellerId == null && categoryId == null) {
-            return this.productRepository.find({ relations: ['seller', 'category'] });
-        }
-
         const qb = this.productRepository.createQueryBuilder('product')
             .leftJoinAndSelect('product.seller', 'seller')
             .leftJoinAndSelect('product.category', 'category');
